@@ -4,21 +4,25 @@ using CursoCSharp;
 
 */
 //bool resultado;
-//resultado = _06_OperadoresLogicos.ELogico(false, true);
-//Console.WriteLine($"O resultado do operador logico E: {resultado}");
-//resultado = _06_OperadoresLogicos.Negacao(true);
-//Console.WriteLine($"O resultado do operador logico Negacao: {resultado}");
-//resultado = _06_OperadoresLogicos.OULogico(false, true);
-//Console.WriteLine($"O resultado do operador logico OU: {resultado}");
-//resultado = _06_OperadoresLogicos.OUExclusivo(true, true);
-//Console.WriteLine($"O resultado do operador logico OUExclusivo: {resultado}");
-//EntradaSaidaDados.LerArmazenar();
-//ExercicioTiposPrimitivos.LerArmazenar();
+//resultado = _05_OperadoresLogicos.ELogico(false, true);
+//Console.WriteLine($"O resultado do operador logico OU:{resultado}");
+//resultado = _05_OperadoresLogicos.Negacao(true);
+//Console.WriteLine($"O resultado do operador logico E:{resultado}");
+//resultado = _05_OperadoresLogicos.OULogico(true, true);
+//Console.WriteLine($"O resultado do operador logico Negação:{resultado}");
+//resultado = _05_OperadoresLogicos.OUExclusivo(true, true);9
+//Console.WriteLine($"O resultado do operador logico OUExclusivo:{resultado}");
+//EntradaSaidaDadoss.LerArmazenar();    
+//ExercicioTiposPrimitivos.EntradaSaida();
 //OperadoresAritmeticos.Soma();
 //OperadoresAritmeticos.Subtracao();
-//OperadoresAritmeticos.Multiplicação();
-//OperadoresAritmeticos.Divisão();
+//OperadoresAritmeticos.Multiplicacao();
+//OperadoresAritmeticos.Divisao();
 //OperadoresAritmeticos.Resto();
 //OperadoresAritmeticos.Incremento();
 //OperadoresAritmeticos.Decremento();
-//TiposPrimitivos.ImprimirTipos();
+//OperadoresComparação.DemonstrarOperadores();
+//Exercicio.MostrarResultado();
+//Conversao.DemonstrarConversoes();
+//EstruturaRepeticao.DemonstrarRepeticoes();
+
