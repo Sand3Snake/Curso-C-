@@ -1,8 +1,10 @@
 ﻿using Curso_C_;
 
-Advogado advogado = new Advogado();
-advogado.oab = "asdadas";
-advogado.salario = 15.000;
-advogado.nome = "Cantoara";
+//var example = new VarUsageExample();
+//example.DemonstrateVarUsage();
 
-advogado.ExibirInformacoes();
+//var exemplo = new ExemploUsoDynamic();
+//exemplo.DemonstrarUsoDynamic();
+
+var exemplo = new ExemploUsoLINQ();
+exemplo.DemonstrarUsoLINQ();

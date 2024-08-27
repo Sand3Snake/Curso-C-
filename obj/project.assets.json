@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Professor\\.nuget\\packages\\": {}
+    "C:\\Users\\Aluno Noite\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Professor\\Desktop\\Conteudo do Curso Tecnico\\Curso C#\\Curso CSharp.csproj",
+      "projectUniqueName": "C:\\Users\\Aluno Noite\\Documents\\Curso-C-\\Curso CSharp.csproj",
       "projectName": "Curso CSharp",
-      "projectPath": "C:\\Users\\Professor\\Desktop\\Conteudo do Curso Tecnico\\Curso C#\\Curso CSharp.csproj",
-      "packagesPath": "C:\\Users\\Professor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Professor\\Desktop\\Conteudo do Curso Tecnico\\Curso C#\\obj\\",
+      "projectPath": "C:\\Users\\Aluno Noite\\Documents\\Curso-C-\\Curso CSharp.csproj",
+      "packagesPath": "C:\\Users\\Aluno Noite\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Aluno Noite\\Documents\\Curso-C-\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Professor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Aluno Noite\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
