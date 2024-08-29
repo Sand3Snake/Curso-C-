@@ -1,21 +1,7 @@
 ﻿using Curso_C_;
 
-//var example = new VarUsageExample();
-//example.DemonstrateVarUsage();
+//var ListP = new Exercicio();
+//ListP.ExibirConsulta();
 
-//var exemplo = new ExemploUsoDynamic();
-//exemplo.DemonstrarUsoDynamic();
-
-//var exemplo = new ExemploUsoLINQ();
-//exemplo.DemonstrarUsoLINQ();
-
-//Exercicios exercicio = new Exercicios();
-//exercicio.Metodo();
-
-//var isso = new Atividade();
-//isso.Lista();
-
-//var suuh = new PessoaSuuh();
-//suuh.Mostrar();
-
-
+//var ListP = new Exercicio();
+//ListP.ExibirConsultaProduto();
