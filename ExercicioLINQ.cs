@@ -8,39 +8,39 @@ using System.Threading.Tasks;
 
 namespace Curso_C_
 {
-    //Adicione uma lista de produtos com propriedades Nome e Preço.Faça uma consulta LINQ para encontrar os produtos cujo preço é superior à média de todos os produtos.
+
+    public class Livro
+    {
+        public string Titulo;
+        public string Autor;
+        public int AnoPublicacao;
+    }
 
     public class Exercicio
     {
-
-        public void ExibirConsultaProduto()
+        public void Seila()
         {
-            var Produtos = new List<Produtos>
-            {
-                new Produtos { Nome = "Arroz", Preco = 20.00 },
-                new Produtos { Nome = "Feijão", Preco = 25.00 },
-                new Produtos { Nome = "Macarrao", Preco = 22.00 },
-                new Produtos { Nome = "Filé", Preco = 28.00},
-                new Produtos { Nome = "Café", Preco = 18.00 },
-                new Produtos { Nome = "Manteiga", Preco = 13.00 },
-                new Produtos { Nome = "Ovo", Preco = 16.00 },
+            var LivrosList = new List<Livro>
+    {
+            new Livro{Titulo="Se houver um amanhã", Autor = "Sidney Shadow" , AnoPublicacao = 1985 },
+            new Livro{Titulo="O reverso da medalha", Autor = "Sidney Shadow" , AnoPublicacao = 1982 },
+            new Livro{Titulo="O outro lado da meia noite", Autor = "Sidney Shadow" , AnoPublicacao = 1973 },
+            new Livro{Titulo="Me diga seus sonhos", Autor = "Sidney Shadow" , AnoPublicacao = 1998 },
+    };
 
-            };
+            var receberLivros = LivrosList.Where(p => p.AnoPublicacao > 1980).OrderBy(x => x.AnoPublicacao).ToList();
 
-            var precoMedio = Produtos.Average(p => p.Preco);
-            var precoMaiorPrecoMedio = Produtos.Where(p => p.Preco > precoMedio);
-            foreach (var produto in precoMaiorPrecoMedio)
+            foreach (var livro in receberLivros)
             {
-                Console.WriteLine($"O nome do produto e {produto.Nome}, o preço do produto e {produto.Preco}");
+                Console.WriteLine($"{livro.Titulo}, {livro.Autor}, {livro.AnoPublicacao}");
             }
-        }
-    }
-        public class Produtos
-        {
-            public string? Nome;
-            public double? Preco;
-        }
-    }
 
-
+        }
     
+    }
+}
+
+
+
+
+
