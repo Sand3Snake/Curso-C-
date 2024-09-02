@@ -1,4 +1,4 @@
 ﻿using Curso_C_;
 
-var pessoa = new Exercicio();
-pessoa.Seila();
+var metodos =  new Metodos();
+metodos.DemonstrarMetodos();

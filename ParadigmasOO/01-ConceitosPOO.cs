@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Curso_C_
+namespace Curso_C_.ParadigmasOO
 {
     public class ConceitosPOO
     {
@@ -52,7 +52,7 @@ namespace Curso_C_
             Console.WriteLine("Isso pode ser alcançado através de sobrecarga de métodos e sobrescrita de métodos.");
             Console.WriteLine();
         }
-        
-       
+
+
     }
 }

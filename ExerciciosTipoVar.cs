@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Curso_C_
 {
+    /*
     //Declare uma variável de cada um dos seguintes tipos usando var e atribua a elas valores apropriados. Depois, exiba o tipo da variável usando GetType() para confirmar a inferência do tipo.
 
     public class Exercicios
@@ -86,7 +87,7 @@ namespace Curso_C_
         public string Nome; 
         public int Idade;
   
-    }
+    }*/
 
-
+}
 
