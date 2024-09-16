@@ -1,392 +1,376 @@
-﻿using Curso_C_;
-using Curso_C_.ParadigmasOO;
+﻿using SistemaAcademia.SistemaAcademia;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
-/*
- namespace BibliotecaVeiculos
+namespace Curso_C_
 {
     class Program
     {
+        static List<Usuario> usuarios = new List<Usuario>();
+        static Biblioteca academia = new Biblioteca();
+        static List<Locacao> locacoes = new List<Locacao>();
+
         static void Main(string[] args)
         {
-            // Inicialização de objetos
-            Biblioteca biblioteca = new Biblioteca();
-            Garagem garagem = new Garagem();
-            Usuario usuario = new Usuario("João Silva", "12345678900");
-            Cliente cliente = new Cliente("Maria Oliveira", "98765432100");
+            CarregarDados();
 
-            // Loop do menu principal
-            int opcao = 0;
-            do
+            bool continuar = true;
+            while (continuar)
             {
-                Console.Clear(); // Limpa a tela para uma melhor organização visual
+                Console.Clear();
                 Console.WriteLine("==============================================");
                 Console.WriteLine("==========   SISTEMA DE GERENCIAMENTO   ======");
                 Console.WriteLine("==============================================\n");
                 Console.WriteLine("1. Biblioteca de Livros");
-                Console.WriteLine("2. Sistema de Gerenciamento de Veículos");
+                Console.WriteLine("2. Gerenciar Usuários");
                 Console.WriteLine("0. Sair");
-                Console.WriteLine("==============================================");
+
                 Console.Write("Escolha uma opção: ");
-                opcao = int.Parse(Console.ReadLine());
+                string opcao = Console.ReadLine();
 
                 switch (opcao)
                 {
-                    case 1:
-                        MenuBiblioteca(biblioteca, usuario);
+                    case "1":
+                        GerenciarBiblioteca();
                         break;
-                    case 2:
-                        MenuVeiculos(garagem, cliente);
+                    case "2":
+                        GerenciarUsuarios();
                         break;
-                    case 0:
-                        Console.WriteLine("\nSaindo do programa...");
+                    case "0":
+                        SalvarDados();
+                        continuar = false;
                         break;
                     default:
-                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        Console.WriteLine("Opção inválida. Tente novamente.");
                         break;
                 }
-            } while (opcao != 0);
+            }
         }
 
-        static void MenuBiblioteca(Biblioteca biblioteca, Usuario usuario)
+        static void GerenciarBiblioteca()
         {
-            int opcao = 0;
-            do
+            bool voltar = false;
+            while (!voltar)
             {
                 Console.Clear();
                 Console.WriteLine("==============================================");
-                Console.WriteLine("==========   BIBLIOTECA DE LIVROS   ==========");
+                Console.WriteLine("==========   GERENCIAR BIBLIOTECA   ==========");
                 Console.WriteLine("==============================================\n");
-                Console.WriteLine("1. Adicionar Livro");
-                Console.WriteLine("2. Listar Livros");
-                Console.WriteLine("3. Emprestar Livro");
-                Console.WriteLine("4. Devolver Livro");
-                Console.WriteLine("5. Exibir Livros Emprestados");
-                Console.WriteLine("0. Voltar");
-                Console.WriteLine("==============================================");
+                Console.WriteLine("1. Listar Livros");
+                Console.WriteLine("2. Adicionar Livro");
+                Console.WriteLine("3. Remover Livro");
+                Console.WriteLine("4. Emprestar Livro");
+                Console.WriteLine("5. Devolver Livro");
+                Console.WriteLine("0. Voltar ao Menu Principal");
+
                 Console.Write("Escolha uma opção: ");
-                opcao = int.Parse(Console.ReadLine());
+                string opcao = Console.ReadLine();
 
                 switch (opcao)
                 {
-                    case 1:
-                        AdicionarLivro(biblioteca);
+                    case "1":
+                        ListarLivros();
                         break;
-                    case 2:
-                        biblioteca.ListarLivros();
+                    case "2":
+                        AdicionarLivro();
                         break;
-                    case 3:
-                        EmprestarLivro(biblioteca, usuario);
+                    case "3":
+                        RemoverLivro();
                         break;
-                    case 4:
-                        DevolverLivro(biblioteca, usuario);
+                    case "4":
+                        EmprestarLivro();
                         break;
-                    case 5:
-                        usuario.ExibirLivrosEmprestados();
+                    case "5":
+                        DevolverLivro();
                         break;
-                    case 0:
-                        Console.WriteLine("\nVoltando ao menu principal...");
+                    case "0":
+                        voltar = true;
                         break;
                     default:
-                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        Console.WriteLine("Opção inválida. Tente novamente.");
                         break;
                 }
-                Console.WriteLine("\nPressione qualquer tecla para continuar...");
-                Console.ReadKey(); // Pausa para permitir que o usuário veja a mensagem antes de continuar
-            } while (opcao != 0);
+            }
         }
 
-        static void MenuVeiculos(Garagem garagem, Cliente cliente)
+        static void GerenciarUsuarios()
         {
-            int opcao = 0;
-            do
+            bool voltar = false;
+            while (!voltar)
             {
                 Console.Clear();
                 Console.WriteLine("==============================================");
-                Console.WriteLine("=======   SISTEMA DE VEÍCULOS - GARAGEM   =====");
+                Console.WriteLine("=========   GERENCIAR USUÁRIOS   =========");
                 Console.WriteLine("==============================================\n");
-                Console.WriteLine("1. Adicionar Veículo");
-                Console.WriteLine("2. Listar Veículos");
-                Console.WriteLine("3. Comprar Veículo");
-                Console.WriteLine("4. Vender Veículo");
-                Console.WriteLine("5. Exibir Veículos Comprados");
-                Console.WriteLine("0. Voltar");
-                Console.WriteLine("==============================================");
+                Console.WriteLine("1. Listar Usuários");
+                Console.WriteLine("2. Adicionar Usuário");
+                Console.WriteLine("3. Remover Usuário");
+                Console.WriteLine("4. Listar Livros Emprestados por Usuário");
+                Console.WriteLine("0. Voltar ao Menu Principal");
+
                 Console.Write("Escolha uma opção: ");
-                opcao = int.Parse(Console.ReadLine());
+                string opcao = Console.ReadLine();
 
                 switch (opcao)
                 {
-                    case 1:
-                        AdicionarVeiculo(garagem);
+                    case "1":
+                        ListarUsuarios();
                         break;
-                    case 2:
-                        ListarVeiculos(garagem);
+                    case "2":
+                        AdicionarUsuario();
                         break;
-                    case 3:
-                        ComprarVeiculo(garagem, cliente);
+                    case "3":
+                        RemoverUsuario();
                         break;
-                    case 4:
-                        VenderVeiculo(garagem);
+                    case "4":
+                        ListarLivrosEmprestadosPorUsuario();
                         break;
-                    case 5:
-                        cliente.ExibirVeiculosComprados();
-                        break;
-                    case 0:
-                        Console.WriteLine("\nVoltando ao menu principal...");
+                    case "0":
+                        voltar = true;
                         break;
                     default:
-                        Console.WriteLine("\nOpção inválida, tente novamente.");
+                        Console.WriteLine("Opção inválida. Tente novamente.");
                         break;
                 }
-                Console.WriteLine("\nPressione qualquer tecla para continuar...");
-                Console.ReadKey(); // Pausa para permitir que o usuário veja a mensagem antes de continuar
-            } while (opcao != 0);
-        }
-
-        static void AdicionarLivro(Biblioteca biblioteca)
-        {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("=========   ADICIONAR NOVO LIVRO   ==========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o título do livro: ");
-            string titulo = Console.ReadLine();
-            Console.Write("Digite o autor do livro: ");
-            string autor = Console.ReadLine();
-            Console.Write("Digite o ano de publicação: ");
-            int ano = int.Parse(Console.ReadLine());
-            Console.Write("Digite o número de páginas: ");
-            int paginas = int.Parse(Console.ReadLine());
-
-            Livro livro = new Livro(titulo, autor, ano, paginas);
-            biblioteca.AdicionarLivro(livro);
-            Console.WriteLine("\nLivro adicionado com sucesso!");
-        }
-
-        static void EmprestarLivro(Biblioteca biblioteca, Usuario usuario)
-        {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==========   EMPRÉSTIMO DE LIVRO   ==========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o título do livro a ser emprestado: ");
-            string titulo = Console.ReadLine();
-            Livro livro = biblioteca.BuscarLivroPorTitulo(titulo);
-            if (livro != null)
-            {
-                usuario.EmprestarLivro(livro, biblioteca);
-                Console.WriteLine("\nLivro emprestado com sucesso!");
-            }
-            else
-            {
-                Console.WriteLine("\nLivro não encontrado no acervo.");
             }
         }
 
-        static void DevolverLivro(Biblioteca biblioteca, Usuario usuario)
+        static void ListarLivros()
         {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("===========   DEVOLUÇÃO DE LIVRO   ===========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o título do livro a ser devolvido: ");
-            string titulo = Console.ReadLine();
-            Livro livro = biblioteca.BuscarLivroPorTitulo(titulo);
-            if (livro != null)
-            {
-                usuario.DevolverLivro(livro, biblioteca);
-                Console.WriteLine("\nLivro devolvido com sucesso!");
-            }
-            else
-            {
-                Console.WriteLine("\nLivro não encontrado na lista de empréstimos.");
-            }
+            // Implementar o método para listar livros da biblioteca
         }
 
-        static void AdicionarVeiculo(Garagem garagem)
+        static void AdicionarLivro()
         {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("=========   ADICIONAR NOVO VEÍCULO   =========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite a marca do veículo: ");
-            string marca = Console.ReadLine();
-            Console.Write("Digite o modelo do veículo: ");
-            string modelo = Console.ReadLine();
-            Console.Write("Digite o ano do veículo: ");
-            int ano = int.Parse(Console.ReadLine());
-            Console.Write("Digite a quilometragem do veículo: ");
-            int quilometragem = int.Parse(Console.ReadLine());
-
-            Veiculo veiculo = new Veiculo(marca, modelo, ano, quilometragem);
-            garagem.AdicionarVeiculo(veiculo);
-            Console.WriteLine("\nVeículo adicionado com sucesso!");
+            // Implementar o método para adicionar livro à biblioteca
         }
 
-        static void ListarVeiculos(Garagem garagem)
+        static void RemoverLivro()
         {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("======   LISTA DE VEÍCULOS DISPONÍVEIS   =====");
-            Console.WriteLine("==============================================");
-            var veiculos = garagem.ListarTodosVeiculos(); // Obtém todos os veículos da garagem
+            // Implementar o método para remover livro da biblioteca
+        }
 
-            if (veiculos.Count == 0)
+        static void EmprestarLivro()
+        {
+            // Implementar o método para emprestar livro
+        }
+
+        static void DevolverLivro()
+        {
+            // Implementar o método para devolver livro
+        }
+
+        static void ListarUsuarios()
+        {
+            string caminhoArquivo = @"C:\Users\Aluno Noite\Documents\Curso-C-\usuarios.json";
+
+            if (File.Exists(caminhoArquivo))
             {
-                Console.WriteLine("\nNenhum veículo disponível.");
-            }
-            else
-            {
-                foreach (var veiculo in veiculos) // Itera sobre a lista de veículos
+                try
                 {
-                    veiculo.ExibirDetalhes(); // Exibe os detalhes de cada veículo
+                    string json = File.ReadAllText(caminhoArquivo);
+                    var dados = JsonSerializer.Deserialize<Dados>(json);
+
+                    if (dados != null && dados.Usuarios != null)
+                    {
+                        Console.WriteLine("==============================================");
+                        Console.WriteLine("=========   LISTA DE USUÁRIOS CADASTRADOS   =========");
+                        Console.WriteLine("==============================================");
+
+                        if (dados.Usuarios.Count == 0)
+                        {
+                            Console.WriteLine("\nNenhum usuário cadastrado.");
+                        }
+                        else
+                        {
+                            for (int i = 0; i < dados.Usuarios.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. {dados.Usuarios[i].Nome} - CPF: {dados.Usuarios[i].Cpf}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Dados carregados são nulos ou a lista de usuários está vazia.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao carregar ou desserializar o JSON: {ex.Message}");
                 }
             }
+            else
+            {
+                Console.WriteLine("Arquivo JSON não encontrado.");
+            }
+
+            Console.WriteLine("\nPressione qualquer tecla para voltar...");
+            Console.ReadKey();
         }
 
-        static void ComprarVeiculo(Garagem garagem, Cliente cliente)
+        static void ListarEquipamentos()
         {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("=========   COMPRA DE VEÍCULO   =============");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o modelo do veículo a ser comprado: ");
-            string modelo = Console.ReadLine();
-            Veiculo veiculo = garagem.BuscarVeiculoPorModelo(modelo);
-            if (veiculo != null)
+            string caminhoArquivo = @"C:\Users\Aluno Noite\Documents\Curso-C-\equipamentos.json";
+
+            if (File.Exists(caminhoArquivo))
             {
-                cliente.ComprarVeiculo(veiculo, garagem);
-                Console.WriteLine("\nVeículo comprado com sucesso!");
+                try
+                {
+                    string json = File.ReadAllText(caminhoArquivo);
+                    var dados = JsonSerializer.Deserialize<Dados>(json);
+
+                    if (dados != null && dados.Equipamentos != null)
+                    {
+                        Console.WriteLine("==============================================");
+                        Console.WriteLine("=========   LISTA DE EQUIPAMENTOS CADASTRADOS   =========");
+                        Console.WriteLine("==============================================");
+
+                        if (dados.Equipamentos.Count == 0)
+                        {
+                            Console.WriteLine("\nNenhum equipamento cadastrado.");
+                        }
+                        else
+                        {
+                            for (int i = 0; i < dados.Equipamentos.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. {dados.Equipamentos[i].Nome} - Tipo: {dados.Equipamentos[i].Tipo}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Dados carregados são nulos ou a lista de equipamentos está vazia.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao carregar ou desserializar o JSON: {ex.Message}");
+                }
             }
             else
             {
-                Console.WriteLine("\nVeículo não encontrado.");
+                Console.WriteLine("Arquivo JSON não encontrado.");
             }
+
+            Console.WriteLine("\nPressione qualquer tecla para voltar...");
+            Console.ReadKey();
         }
 
-        static void VenderVeiculo(Garagem garagem)
+        static void ListarLocacoes()
         {
-            Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==========   VENDA DE VEÍCULO   =============");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o modelo do veículo a ser vendido: ");
-            string modelo = Console.ReadLine();
-            Veiculo veiculo = garagem.BuscarVeiculoPorModelo(modelo);
-            if (veiculo != null)
+            string caminhoArquivo = @"C:\Users\Aluno Noite\Documents\Curso-C-\locacoes.json";
+
+            if (File.Exists(caminhoArquivo))
             {
-                garagem.VenderVeiculo(veiculo);
-                Console.WriteLine("\nVeículo vendido com sucesso!");
+                try
+                {
+                    string json = File.ReadAllText(caminhoArquivo);
+                    var dados = JsonSerializer.Deserialize<Dados>(json);
+
+                    if (dados != null && dados.Locacoes != null)
+                    {
+                        Console.WriteLine("==============================================");
+                        Console.WriteLine("=========   LISTA DE LOCAÇÕES CADASTRADAS   =========");
+                        Console.WriteLine("==============================================");
+
+                        if (dados.Locacoes.Count == 0)
+                        {
+                            Console.WriteLine("\nNenhuma locação cadastrada.");
+                        }
+                        else
+                        {
+                            for (int i = 0; i < dados.Locacoes.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. Usuário CPF: {dados.Locacoes[i].UsuarioCpf} - Equipamento: {dados.Locacoes[i].EquipamentoNome} - Data: {dados.Locacoes[i].DataLocacao}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Dados carregados são nulos ou a lista de locações está vazia.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao carregar ou desserializar o JSON: {ex.Message}");
+                }
             }
             else
             {
-                Console.WriteLine("\nVeículo não encontrado.");
+                Console.WriteLine("Arquivo JSON não encontrado.");
+            }
+
+            Console.WriteLine("\nPressione qualquer tecla para voltar...");
+            Console.ReadKey();
+        }
+
+        static void ListarLivrosEmprestadosPorUsuario()
+        {
+            // Implementar o método para listar livros emprestados por um usuário específico
+        }
+
+        static void AdicionarUsuario()
+        {
+            // Implementar o método para adicionar um novo usuário
+        }
+
+        static void RemoverUsuario()
+        {
+            // Implementar o método para remover um usuário
+        }
+
+        static void CarregarDados()
+        {
+            string caminhoUsuarios = @"C:\Users\Aluno Noite\Documents\Curso-C-\usuarios.json";
+            if (File.Exists(caminhoUsuarios))
+            {
+                try
+                {
+                    string json = File.ReadAllText(caminhoUsuarios);
+                    var dados = JsonSerializer.Deserialize<Dados>(json);
+                    if (dados != null && dados.Usuarios != null)
+                    {
+                        usuarios = dados.Usuarios;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao carregar dados dos usuários: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Arquivo de usuários não encontrado.");
+            }
+
+            // Carregar Equipamentos e Locações também
+        }
+
+        static void SalvarDados()
+        {
+            string caminhoUsuarios = @"C:\Users\Aluno Noite\Documents\Curso-C-\usuarios.json";
+            string caminhoEquipamentos = @"C:\Users\Aluno Noite\Documents\Curso-C-\equipamentos.json";
+            string caminhoLocacoes = @"C:\Users\Aluno Noite\Documents\Curso-C-\locacoes.json";
+
+            try
+            {
+                var dados = new Dados
+                {
+                    Usuarios = usuarios,
+                    // Preencher com a lista de equipamentos e locações
+                };
+
+                string json = JsonSerializer.Serialize(dados, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(caminhoUsuarios, json);
+                // Salvar os arquivos de equipamentos e locações
+                Console.WriteLine("Dados salvos com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao salvar dados: {ex.Message}");
             }
         }
     }
-} 
- */
-
-/*
- // Instância de Cachorro
-Cachorro cachorro = new Cachorro("Rex");
-cachorro.ExibirInformacoes();
-cachorro.FazerSom();
-cachorro.ExplicarHeranca();
-
-// Instância de Gato
-Gato gato = new Gato("Mimi");
-gato.ExibirInformacoes();
-gato.FazerSom();
-gato.ExplicarHeranca();
- */
-
-/*// Criando um objeto Endereco que pode existir independentemente
-Endereco endereco = new Endereco("Rua Principal", "Cidade Exemplo");
-
-// Criando um objeto Pessoa que contém um Endereco (agregação)
-PessoaAgrecacao pessoa = new PessoaAgrecacao("João", endereco);
-
-// Exibir as informações da pessoa e seu endereço
-pessoa.ExibirInformacoes();
-
-// Explicando o conceito de agregação
-pessoa.ExplicarAgregacao();
-*/
-
-/*// Criando um objeto Departamento
-Departamento departamento = new Departamento("Recursos Humanos");
-
-// Criando um objeto Funcionario que está associado a um Departamento
-Funcionario funcionarioComDepartamento = new Funcionario("Ana", departamento);
-
-// Criando um objeto Funcionario sem associação a nenhum Departamento
-Funcionario funcionarioSemDepartamento = new Funcionario("Carlos");
-
-// Exibir as informações dos funcionários
-funcionarioComDepartamento.ExibirInformacoes();
-funcionarioSemDepartamento.ExibirInformacoes();
-
-// Explicando o conceito de associação
-funcionarioComDepartamento.ExplicarAssociacao();*/
-
-/*// Criando um objeto Carro, que inclui a criação de um Motor
-Carro carro = new Carro("Fusca", "Motor 1600");
-
-// Exibindo informações sobre o carro e seu motor
-carro.ExibirInformacoes();
-
-// Explicando o conceito de composição
-carro.ExplicarComposicao();*/
-
-/*// Criando funcionários
-FuncionarioMulti funcionario1 = new FuncionarioMulti("Ana");
-FuncionarioMulti funcionario2 = new FuncionarioMulti("Carlos");
-
-// Criando um projeto
-Projeto projeto = new Projeto("Desenvolvimento de Software");
-
-// Adicionando funcionários ao projeto
-projeto.AdicionarFuncionario(funcionario1);
-projeto.AdicionarFuncionario(funcionario2);
-
-// Exibindo informações sobre o projeto e seus funcionários
-projeto.ExibirInformacoes();
-
-// Explicando o conceito de multiplicidade
-projeto.ExplicarMultiplicidade();*/
-
-/*
- AnimalAbs cachorro = new CachorroAbs("Rex");
-AnimalAbs gato = new GatoAbs("Mimi");
-
-// Exibindo informações e fazendo som dos animais
-cachorro.ExibirInformacoes();
-cachorro.FazerSom();
-
-gato.ExibirInformacoes();
-gato.FazerSom();
-
-// Explicando o conceito de classe abstrata
-cachorro.ExplicarClasseAbstrata();
- */
-
-/*
- // Criando instâncias de classes que implementam a interface
-IAnimal cachorro = new CachorroInter("Rex");
-IAnimal gato = new GatoInter("Mimi");
-
-// Exibindo informações e sons dos animais
-cachorro.ExibirInformacoes();
-cachorro.FazerSom();
-
-gato.ExibirInformacoes();
-gato.FazerSom();
-
-// Explicando o conceito de interface
-ExplicadorDeInterface explicador = new ExplicadorDeInterface();
-explicador.ExplicarInterface();
-*/
-
+}

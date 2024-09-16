@@ -1,0 +1,24 @@
+{
+  "Usuarios": [],
+  "Livros": [
+    {
+      "Titulo": "coraline",
+      "Autor": "alguem ai",
+      "Ano": 2002,
+      "Paginas": 204
+    },
+    {
+      "Titulo": "van helsing",
+      "Autor": "nao sei",
+      "Ano": 2003,
+      "Paginas": 300
+    },
+    {
+      "Titulo": "a volta dos que nao foram",
+      "Autor": "sei nao",
+      "Ano": 1980,
+      "Paginas": 236
+    }
+  ],
+  "Emprestimos": []
+}

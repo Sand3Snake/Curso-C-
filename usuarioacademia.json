@@ -1,0 +1,23 @@
+{
+  "Usuarios": [
+    {
+      "Nome": "João Silva",
+      "Cpf": "123.456.789-00",
+      "EquipamentosLocados": [
+        {
+          "Nome": "Halteres",
+          "Tipo": "Musculação"
+        }
+      ]
+    },
+    {
+      "Nome": "Maria Oliveira",
+      "Cpf": "987.654.321-00",
+      "EquipamentosLocados": []
+        {
+        "Nome": "Bicicleta Ergométrica",
+        "Tipo": "Cardio"
+        }
+    }
+  ]
+}
