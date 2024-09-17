@@ -1,9 +1,1 @@
-{
-  "Locações": [
-    {
-      "UsuarioCpf": "123.456.789-00",
-      "EquipamentoNome": "Halteres",
-      "DataLocacao": "2024-09-15T14:30:00"
-    }
-  ]
-}
+[{"Id":0,"Equipamento":{"Id":0,"Nome":"Halteres"},"Usuario":{"Id":0,"Nome":"Carlos Souza"}}]
