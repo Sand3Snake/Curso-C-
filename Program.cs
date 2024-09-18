@@ -22,19 +22,36 @@ namespace SistemaGerenciamentoAcademia
 
             do
             {
-                Console.Clear();
-                Console.WriteLine("==============================================");
-                Console.WriteLine("==== Sistema de Gerenciamento de Academia ====");
-                Console.WriteLine("==============================================");
-                Console.WriteLine("Autor: Suelen Soares da Silva");
-                Console.WriteLine($"Data e Hora: {DateTime.Now}");
-                Console.WriteLine("==============================================\n");
-                Console.WriteLine("1. Gerenciar Equipamentos");
-                Console.WriteLine("2. Gerenciar Usuários");
-                Console.WriteLine("3. Gerenciar Locações");
-                Console.WriteLine("0. Sair");
 
-                Console.Write("Escolha uma opção: ");
+                Console.Clear();
+                // Título
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA                 ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Informações do autor e data/hora
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║ Autor: Suelen Soares da Silva                                ║");
+                Console.WriteLine($" ║ Data e Hora: {DateTime.Now,-44}    ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Opções do menu
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║ 1. Gerenciar Equipamentos                                    ║");
+                Console.WriteLine(" ║ 2. Gerenciar Usuários                                        ║");
+                Console.WriteLine(" ║ 3. Gerenciar Locações                                        ║");
+                Console.WriteLine(" ║ 4. Gerar Relatório                                           ║");
+                Console.WriteLine(" ║ 0. Sair                                                      ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Escolha da opção
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" Escolha uma opção: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
                 if (int.TryParse(Console.ReadLine(), out opcao))
                 {
                     switch (opcao)
@@ -47,6 +64,9 @@ namespace SistemaGerenciamentoAcademia
                             break;
                         case 3:
                             MenuLocacoes();
+                            break;
+                        case 4:
+                            GerarRelatorio();
                             break;
                         case 0:
                             SalvarDados();
@@ -61,31 +81,124 @@ namespace SistemaGerenciamentoAcademia
                 {
                     Console.WriteLine("\nEntrada inválida. Por favor, insira um número.");
                 }
+
                 Console.WriteLine("\nPressione qualquer tecla para continuar...");
                 Console.ReadKey();
+
             } while (opcao != 0);
         }
+        static void GerarRelatorio()
+        {
+            Console.Clear();
+            Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║       SISTEMA DE GERENCIAMENTO DE ACADEMIA - RELATÓRIO       ║");
+            Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            // Relatório de Equipamentos
+            Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║                          Equipamentos                        ║");
+            Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+            if (equipamentos.Count == 0)
+            {
+                Console.WriteLine(" Nenhum equipamento cadastrado.");
+            }
+            else
+            {
+                Console.WriteLine($" {"ID",-4} | {"Nome",-20} ");
+                Console.WriteLine(new string('=', 30));
+                foreach (var equipamento in equipamentos)
+                {
+                    Console.WriteLine($" {equipamento.Id,-4} | {equipamento.Nome,-20} ");
+                }
+                Console.WriteLine(new string('-', 30));
+                Console.WriteLine($" Total de Equipamentos: {equipamentos.Count}");
+            }
+
+            // Relatório de Usuários
+            Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║                            Usuários                          ║");
+            Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+            if (usuarios.Count == 0)
+            {
+                Console.WriteLine(" Nenhum usuário cadastrado.");
+            }
+            else
+            {
+                Console.WriteLine($" {"ID",-4} | {"Nome",-20} ");
+                Console.WriteLine(new string('=', 30));
+                foreach (var usuario in usuarios)
+                {
+                    Console.WriteLine($" {usuario.Id,-4} | {usuario.Nome,-20} ");
+                }
+                Console.WriteLine(new string('-', 30));
+                Console.WriteLine($" Total de Usuários: {usuarios.Count}");
+            }
+
+            // Relatório de Locações
+            Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║                            Locações                          ║");
+            Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+            if (locacoes.Count == 0)
+            {
+                Console.WriteLine(" Nenhuma locação cadastrada.");
+            }
+            else
+            {
+                Console.WriteLine($" {"ID",-4} | {"Equipamento",-20} | {"Usuário",-20} ");
+                Console.WriteLine(new string('=', 50));
+                foreach (var locacao in locacoes)
+                {
+                    Console.WriteLine($" {locacao.Id,-4} | {locacao.Equipamento.Nome,-20} | {locacao.Usuario.Nome,-20} ");
+                }
+                Console.WriteLine(new string('-', 50));
+                Console.WriteLine($" Total de Locações: {locacoes.Count}");
+            }
+
+            Console.ResetColor(); // Reseta a cor do console para o padrão.
+        }
+
+
 
         static void MenuEquipamentos()
         {
             int opcao = -1;
             do
             {
-                Console.Clear();
-                Console.WriteLine("==============================================");
-                Console.WriteLine("==== Sistema de Gerenciamento de Academia ====");
-                Console.WriteLine("====         Gerenciar Equipamentos       ====");
-                Console.WriteLine("==============================================");
-                Console.WriteLine($"Autor: Suelen Soares da Silva");
-                Console.WriteLine($"Data e Hora: {DateTime.Now}");
-                Console.WriteLine("==============================================\n");
-                Console.WriteLine("1. Adicionar Equipamento");
-                Console.WriteLine("2. Listar Equipamentos");
-                Console.WriteLine("3. Atualizar Equipamento");
-                Console.WriteLine("4. Remover Equipamento");
-                Console.WriteLine("0. Voltar");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA                 ║");
+                Console.WriteLine(" ║               Gerenciar Equipamentos                         ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
 
-                Console.Write("Escolha uma opção: ");
+                // Informações do autor e data/hora
+                string autor = "Autor: Suelen Soares da Silva";
+                string dataHora = $"Data e Hora: {DateTime.Now}";
+                int larguraTotal = 62; // Largura total entre as bordas
+                int espacosRestantesAutor = larguraTotal - autor.Length;
+                int espacosRestantesData = larguraTotal - dataHora.Length;
+
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine($" ║{autor}{new string(' ', espacosRestantesAutor)}║");
+                Console.WriteLine($" ║{dataHora}{new string(' ',espacosRestantesData)}║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Opções do menu de gerenciamento de equipamentos
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║ 1. Adicionar Equipamento                                     ║");
+                Console.WriteLine(" ║ 2. Listar Equipamentos                                       ║");
+                Console.WriteLine(" ║ 3. Atualizar Equipamento                                     ║");
+                Console.WriteLine(" ║ 4. Remover Equipamento                                       ║");
+                Console.WriteLine(" ║ 0. Voltar                                                    ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Escolha de opção
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" Escolha uma opção: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
                 if (int.TryParse(Console.ReadLine(), out opcao))
                 {
                     switch (opcao)
@@ -114,8 +227,10 @@ namespace SistemaGerenciamentoAcademia
                 {
                     Console.WriteLine("\nEntrada inválida. Por favor, insira um número.");
                 }
+
                 Console.WriteLine("\nPressione qualquer tecla para continuar...");
                 Console.ReadKey();
+
             } while (opcao != 0);
         }
 
@@ -125,20 +240,42 @@ namespace SistemaGerenciamentoAcademia
             do
             {
                 Console.Clear();
-                Console.WriteLine("==============================================");
-                Console.WriteLine("==== Sistema de Gerenciamento de Academia ====");
-                Console.WriteLine("====         Gerenciar Usuários           ====");
-                Console.WriteLine("==============================================");
-                Console.WriteLine($"Autor: Suelen Soares da Silva");
-                Console.WriteLine($"Data e Hora: {DateTime.Now}");
-                Console.WriteLine("==============================================\n");
-                Console.WriteLine("1. Adicionar Usuário");
-                Console.WriteLine("2. Listar Usuários");
-                Console.WriteLine("3. Atualizar Usuário");
-                Console.WriteLine("4. Remover Usuário");
-                Console.WriteLine("0. Voltar");
 
-                Console.Write("Escolha uma opção: ");
+                // Título do menu
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA                 ║");
+                Console.WriteLine(" ║                  Gerenciar Usuários                          ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Informações do autor e data/hora
+                string autor = "Autor: Suelen Soares da Silva";
+                string dataHora = $"Data e Hora: {DateTime.Now}";
+                int larguraTotal = 62; // Largura total entre as bordas
+                int espacosRestantesAutor = larguraTotal - autor.Length;
+                int espacosRestantesData = larguraTotal - dataHora.Length;
+
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine($" ║{autor}{new string(' ', espacosRestantesAutor)}║");
+                Console.WriteLine($" ║{dataHora}{new string(' ', espacosRestantesData)}║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Opções de gerenciamento de usuários
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║ 1. Adicionar Usuário                                         ║");
+                Console.WriteLine(" ║ 2. Listar Usuários                                           ║");
+                Console.WriteLine(" ║ 3. Atualizar Usuário                                         ║");
+                Console.WriteLine(" ║ 4. Remover Usuário                                           ║");
+                Console.WriteLine(" ║ 0. Voltar                                                    ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════╝");
+
+                // Escolha de opção
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" Escolha uma opção: ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
                 if (int.TryParse(Console.ReadLine(), out opcao))
                 {
                     switch (opcao)
@@ -167,10 +304,13 @@ namespace SistemaGerenciamentoAcademia
                 {
                     Console.WriteLine("\nEntrada inválida. Por favor, insira um número.");
                 }
+
                 Console.WriteLine("\nPressione qualquer tecla para continuar...");
                 Console.ReadKey();
+
             } while (opcao != 0);
         }
+
 
         static void MenuLocacoes()
         {
@@ -178,20 +318,27 @@ namespace SistemaGerenciamentoAcademia
             do
             {
                 Console.Clear();
-                Console.WriteLine("==============================================");
-                Console.WriteLine("==== Sistema de Gerenciamento de Academia ====");
-                Console.WriteLine("====          Gerenciar Locações          ====");
-                Console.WriteLine("==============================================");
-                Console.WriteLine($"Autor: Suelen Soares da Silva");
-                Console.WriteLine($"Data e Hora: {DateTime.Now}");
-                Console.WriteLine("==============================================\n");
-                Console.WriteLine("1. Adicionar Locação");
-                Console.WriteLine("2. Listar Locações");
-                Console.WriteLine("3. Atualizar Locação");
-                Console.WriteLine("4. Remover Locação");
-                Console.WriteLine("0. Voltar");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+                Console.WriteLine(" ║                 gerenciar locações                    ║");
+                Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+                Console.WriteLine($" Autor: Suelen Soares da Silva");
+                Console.WriteLine($" Data e Hora: {DateTime.Now}");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║                SELECIONE UMA OPÇÃO                    ║");
+                Console.WriteLine(" ╠═══════════════════════════════════════════════════════╣");
+                Console.WriteLine(" ║ 1. Adicionar Locação                                  ║");
+                Console.WriteLine(" ║ 2. Listar Locações                                    ║");
+                Console.WriteLine(" ║ 3. Atualizar Locação                                  ║");
+                Console.WriteLine(" ║ 4. Remover Locação                                    ║");
+                Console.WriteLine(" ║ 0. Voltar                                             ║");
+                Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+                Console.ForegroundColor = ConsoleColor.Green;
+                
 
-                Console.Write("Escolha uma opção: ");
+                Console.Write(" Escolha uma opção: ");
                 if (int.TryParse(Console.ReadLine(), out opcao))
                 {
                     switch (opcao)
@@ -225,24 +372,31 @@ namespace SistemaGerenciamentoAcademia
             } while (opcao != 0);
         }
 
+
         static bool IsValidNumber(string input)
         {
             return int.TryParse(input, out _);
         }
-
-        static bool IsValidText(string input)
+       
+        static bool IsValidId(string input)
         {
-            return !int.TryParse(input, out _);
+            if (IsValidNumber(input))
+            {
+                int id = int.Parse(input);
+                return id > 0;
+            }
+            return false;
         }
 
         static void AdicionarEquipamento()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("======    adicionar novo equipamento   ========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o nome do equipamento: ");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                ADICIONAR NOVO EQUIPAMENTO             ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(" Digite o nome do equipamento: ");
             string nome = Console.ReadLine();
 
             if (IsValidText(nome))
@@ -251,22 +405,48 @@ namespace SistemaGerenciamentoAcademia
                 Equipamento equipamento = new Equipamento(id, nome);
                 equipamentos.Add(equipamento);
 
-                Console.WriteLine("\nEquipamento adicionado com sucesso!");
+                Console.WriteLine("\n Equipamento adicionado com sucesso!");
                 SalvarDados();
             }
             else
             {
-                Console.WriteLine("\nNome do equipamento inválido. Por favor, insira um texto.");
+                Console.WriteLine("\n Nome do equipamento inválido. Por favor, insira um texto válido (não pode estar em branco ou conter apenas números).");
             }
+
+            Console.ResetColor(); // Reseta a cor do console para o padrão.
         }
+
+        static bool IsValidText(string text)
+        {
+            // Verifica se o texto é nulo ou vazio
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return false;
+            }
+
+            // Verifica se o texto contém apenas números
+            foreach (char c in text)
+            {
+                if (char.IsLetter(c))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+
 
         static void ListarEquipamentos()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("==========    lista de equipamentos     ========");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                Lista de Equipamentos                  ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
             if (equipamentos.Count == 0)
             {
@@ -274,68 +454,87 @@ namespace SistemaGerenciamentoAcademia
             }
             else
             {
+                // Cabeçalho da tabela
+                Console.WriteLine(" ╔═══════╦═══════════════════════════════════════════════╗");
+                Console.WriteLine(" ║   ID  ║             Nome                              ║");
+                Console.WriteLine(" ╠═══════╬═══════════════════════════════════════════════╣");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                // Listagem dos equipamentos
                 foreach (var equipamento in equipamentos)
                 {
-                    Console.WriteLine($"ID: {equipamento.Id} - Nome: {equipamento.Nome}");
+                    Console.WriteLine($" ║ {equipamento.Id,-5} ║{equipamento.Nome,-30}                 ║");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
+
+                // Rodapé da tabela
+                Console.WriteLine(" ╚═══════╩═══════════════════════════════════════════════╝");
             }
+
+            Console.ResetColor(); // Reseta a cor do console
         }
 
         static void AtualizarEquipamento()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("=========  atualizar equipamento  ================");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                 ATUALIZAR EQUIPAMENTO                 ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Digite o ID do equipamento a ser atualizado: ");
+            Console.Write(" Digite o ID do equipamento a ser atualizado: ");
             string id = Console.ReadLine();
 
-            if (IsValidNumber(id))
+            if (IsValidId(id))
             {
                 int equipamentoId = int.Parse(id);
                 var equipamento = equipamentos.Find(e => e.Id == equipamentoId);
 
                 if (equipamento != null)
                 {
-                    Console.Write("Digite o novo nome do equipamento: ");
+                    Console.Write(" Digite o novo nome do equipamento: ");
                     string nome = Console.ReadLine();
 
                     if (IsValidText(nome))
                     {
                         equipamento.Nome = nome;
-                        Console.WriteLine("\nEquipamento atualizado com sucesso!");
+                        Console.WriteLine("\n Equipamento atualizado com sucesso!");
                         SalvarDados();
                     }
                     else
                     {
-                        Console.WriteLine("\nNome do equipamento inválido. Por favor, insira um texto.");
+                        Console.WriteLine("\n Nome do equipamento inválido. Por favor, insira um texto válido (não pode estar em branco ou conter apenas números).");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nEquipamento não encontrado.");
+                    Console.WriteLine("\n Equipamento não encontrado.");
                 }
             }
             else
             {
-                Console.WriteLine("\nID do equipamento inválido. Por favor, insira um número.");
+                Console.WriteLine("\n ID do equipamento inválido. Por favor, insira um número positivo.");
             }
+
+            Console.ResetColor();  // Reseta a cor do console para o padrão.
         }
+
+
 
         static void RemoverEquipamento()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("==========    remover equipamento     ============");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                 remover equipamento                   ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Digite o ID do equipamento a ser removido: ");
+            Console.Write(" Digite o ID do equipamento a ser removido: ");
             string id = Console.ReadLine();
 
-            if (IsValidNumber(id))
+            if (IsValidId(id))
             {
                 int equipamentoId = int.Parse(id);
                 var equipamento = equipamentos.Find(e => e.Id == equipamentoId);
@@ -353,18 +552,19 @@ namespace SistemaGerenciamentoAcademia
             }
             else
             {
-                Console.WriteLine("\nID do equipamento inválido. Por favor, insira um número.");
+                Console.WriteLine("\nID do equipamento inválido. Por favor, insira um número positivo.");
             }
         }
 
         static void AdicionarUsuario()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("======    adicionar novo usuário    ==========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o nome do usuário: ");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                ADICIONAR NOVO USUÁRIO                 ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(" Digite o nome do usuário: ");
             string nome = Console.ReadLine();
 
             if (IsValidText(nome))
@@ -373,91 +573,109 @@ namespace SistemaGerenciamentoAcademia
                 Usuario usuario = new Usuario(id, nome);
                 usuarios.Add(usuario);
 
-                Console.WriteLine("\nUsuário adicionado com sucesso!");
+                Console.WriteLine("\n Usuário adicionado com sucesso!");
                 SalvarDados();
             }
             else
             {
-                Console.WriteLine("\nNome do usuário inválido. Por favor, insira um texto.");
+                Console.WriteLine("\n Nome do usuário inválido. Por favor, insira um texto válido (não pode estar em branco ou conter apenas números).");
             }
+
+            Console.ResetColor(); // Reseta a cor do console para o padrão.
         }
+
 
         static void ListarUsuarios()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("==========     lista de usuários      ========");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                   LISTA DE USUÁRIOS                   ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
             if (usuarios.Count == 0)
             {
-                Console.WriteLine("\nNenhum usuário cadastrado.");
+                Console.WriteLine("\n Nenhum usuário cadastrado.");
             }
             else
             {
+                Console.WriteLine(" ╔════════════╦══════════════════════════════════════════╗");
+                Console.WriteLine(" ║ ID         ║ Nome                                     ║");
+                Console.WriteLine(" ╠════════════╬══════════════════════════════════════════╣");
+
                 foreach (var usuario in usuarios)
                 {
-                    Console.WriteLine($"ID: {usuario.Id} - Nome: {usuario.Nome}");
+                    Console.WriteLine($" ║ {usuario.Id,-10} ║ {usuario.Nome,-30}           ║");
                 }
+
+                Console.WriteLine(" ╚════════════╩══════════════════════════════════════════╝");
             }
+
+            Console.ResetColor();  // Reseta a cor do console para o padrão.
         }
+
 
         static void AtualizarUsuario()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("=========  atualizar usuário  ================");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                 ATUALIZAR USUÁRIO                     ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Digite o ID do usuário a ser atualizado: ");
+            Console.Write(" Digite o ID do usuário a ser atualizado: ");
             string id = Console.ReadLine();
 
-            if (IsValidNumber(id))
+            if (IsValidId(id))
             {
                 int usuarioId = int.Parse(id);
                 var usuario = usuarios.Find(u => u.Id == usuarioId);
 
                 if (usuario != null)
                 {
-                    Console.Write("Digite o novo nome do usuário: ");
+                    Console.Write(" Digite o novo nome do usuário: ");
                     string nome = Console.ReadLine();
 
                     if (IsValidText(nome))
                     {
                         usuario.Nome = nome;
-                        Console.WriteLine("\nUsuário atualizado com sucesso!");
+                        Console.WriteLine("\n Usuário atualizado com sucesso!");
                         SalvarDados();
                     }
                     else
                     {
-                        Console.WriteLine("\nNome do usuário inválido. Por favor, insira um texto.");
+                        Console.WriteLine("\n Nome do usuário inválido. Por favor, insira um texto válido (não pode estar em branco ou conter apenas números).");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nUsuário não encontrado.");
+                    Console.WriteLine("\n Usuário não encontrado.");
                 }
             }
             else
             {
-                Console.WriteLine("\nID do usuário inválido. Por favor, insira um número.");
+                Console.WriteLine("\n ID do usuário inválido. Por favor, insira um número positivo.");
             }
+
+            Console.ResetColor(); // Reseta a cor do console para o padrão.
         }
+
 
         static void RemoverUsuario()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("==========    remover usuário     ============");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                  remover usuário                      ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Digite o ID do usuário a ser removido: ");
+            Console.Write(" Digite o ID do usuário a ser removido: ");
             string id = Console.ReadLine();
 
-            if (IsValidNumber(id))
+            if (IsValidId(id))
             {
                 int usuarioId = int.Parse(id);
                 var usuario = usuarios.Find(u => u.Id == usuarioId);
@@ -475,34 +693,36 @@ namespace SistemaGerenciamentoAcademia
             }
             else
             {
-                Console.WriteLine("\nID do usuário inválido. Por favor, insira um número.");
+                Console.WriteLine("\nID do usuário inválido. Por favor, insira um número positivo.");
             }
         }
 
         static void AdicionarLocacao()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("======    adicionar nova locação    ==========");
-            Console.WriteLine("==============================================");
-            Console.Write("Digite o ID do equipamento: ");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                ADICIONAR NOVA LOCAÇÃO                 ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.Write(" Digite o ID do equipamento: ");
             string equipamentoId = Console.ReadLine();
 
-            if (IsValidNumber(equipamentoId))
+            if (IsValidId(equipamentoId))
             {
-                int id = int.Parse(equipamentoId);
-                var equipamento = equipamentos.Find(e => e.Id == id);
+                int idEquipamento = int.Parse(equipamentoId);
+                var equipamento = equipamentos.Find(e => e.Id == idEquipamento);
 
                 if (equipamento != null)
                 {
-                    Console.Write("Digite o ID do usuário: ");
+                    Console.Write(" Digite o ID do usuário: ");
                     string usuarioId = Console.ReadLine();
 
-                    if (IsValidNumber(usuarioId))
+                    if (IsValidId(usuarioId))
                     {
-                        int usuarioIdInt = int.Parse(usuarioId);
-                        var usuario = usuarios.Find(u => u.Id == usuarioIdInt);
+                        int idUsuario = int.Parse(usuarioId);
+                        var usuario = usuarios.Find(u => u.Id == idUsuario);
 
                         if (usuario != null)
                         {
@@ -510,37 +730,41 @@ namespace SistemaGerenciamentoAcademia
                             Locacao locacao = new Locacao(locacaoId, equipamento, usuario);
                             locacoes.Add(locacao);
 
-                            Console.WriteLine("\nLocação adicionada com sucesso!");
+                            Console.WriteLine("\n Locação adicionada com sucesso!");
                             SalvarDados();
                         }
                         else
                         {
-                            Console.WriteLine("\nUsuário não encontrado.");
+                            Console.WriteLine("\n Usuário não encontrado.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("\nID do usuário inválido. Por favor, insira um número.");
+                        Console.WriteLine("\n ID do usuário inválido. Por favor, insira um número positivo.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nEquipamento não encontrado.");
+                    Console.WriteLine("\n Equipamento não encontrado.");
                 }
             }
             else
             {
-                Console.WriteLine("\nID do equipamento inválido. Por favor, insira um número.");
+                Console.WriteLine("\n ID do equipamento inválido. Por favor, insira um número positivo.");
             }
+
+            Console.ResetColor(); // Reseta a cor do console para o padrão.
         }
+
 
         static void ListarLocacoes()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("==========     lista de locações    ==========");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                  lista de locações                    ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
             if (locacoes.Count == 0)
             {
@@ -558,35 +782,36 @@ namespace SistemaGerenciamentoAcademia
         static void AtualizarLocacao()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("=========  atualizar locação  ================");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                  ATUALIZAR LOCAÇÃO                    ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Digite o ID da locação a ser atualizada: ");
+            Console.Write(" Digite o ID da locação a ser atualizada: ");
             string id = Console.ReadLine();
 
-            if (IsValidNumber(id))
+            if (IsValidId(id))
             {
                 int locacaoId = int.Parse(id);
                 var locacao = locacoes.Find(l => l.Id == locacaoId);
 
                 if (locacao != null)
                 {
-                    Console.Write("Digite o novo ID do equipamento: ");
+                    Console.Write(" Digite o novo ID do equipamento: ");
                     string equipamentoId = Console.ReadLine();
 
-                    if (IsValidNumber(equipamentoId))
+                    if (IsValidId(equipamentoId))
                     {
                         int equipamentoIdInt = int.Parse(equipamentoId);
                         var equipamento = equipamentos.Find(e => e.Id == equipamentoIdInt);
 
                         if (equipamento != null)
                         {
-                            Console.Write("Digite o novo ID do usuário: ");
+                            Console.Write(" Digite o novo ID do usuário: ");
                             string usuarioId = Console.ReadLine();
 
-                            if (IsValidNumber(usuarioId))
+                            if (IsValidId(usuarioId))
                             {
                                 int usuarioIdInt = int.Parse(usuarioId);
                                 var usuario = usuarios.Find(u => u.Id == usuarioIdInt);
@@ -595,52 +820,56 @@ namespace SistemaGerenciamentoAcademia
                                 {
                                     locacao.Equipamento = equipamento;
                                     locacao.Usuario = usuario;
-                                    Console.WriteLine("\nLocação atualizada com sucesso!");
+                                    Console.WriteLine("\n Locação atualizada com sucesso!");
                                     SalvarDados();
                                 }
                                 else
                                 {
-                                    Console.WriteLine("\nUsuário não encontrado.");
+                                    Console.WriteLine("\n Usuário não encontrado.");
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("\nID do usuário inválido. Por favor, insira um número.");
+                                Console.WriteLine("\n ID do usuário inválido. Por favor, insira um número positivo.");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("\nEquipamento não encontrado.");
+                            Console.WriteLine("\n Equipamento não encontrado.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("\nID do equipamento inválido. Por favor, insira um número.");
+                        Console.WriteLine("\n ID do equipamento inválido. Por favor, insira um número positivo.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nLocação não encontrada.");
+                    Console.WriteLine("\n Locação não encontrada.");
                 }
             }
             else
             {
-                Console.WriteLine("\nID da locação inválido. Por favor, insira um número.");
+                Console.WriteLine("\n ID da locação inválido. Por favor, insira um número positivo.");
             }
+
+            Console.ResetColor(); // Reseta a cor do console para o padrão.
         }
+
 
         static void RemoverLocacao()
         {
             Console.Clear();
-            Console.WriteLine("==============================================");
-            Console.WriteLine("==== SISTEMA DE GERENCIAMENTO DE ACADEMIA ====");
-            Console.WriteLine("==========    remover locação     ============");
-            Console.WriteLine("==============================================");
+            Console.WriteLine(" ╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine(" ║         SISTEMA DE GERENCIAMENTO DE ACADEMIA          ║");
+            Console.WriteLine(" ║                  remover locação                      ║");
+            Console.WriteLine(" ╚═══════════════════════════════════════════════════════╝");
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Digite o ID da locação a ser removida: ");
+            Console.Write(" Digite o ID da locação a ser removida: ");
             string id = Console.ReadLine();
 
-            if (IsValidNumber(id))
+            if (IsValidId(id))
             {
                 int locacaoId = int.Parse(id);
                 var locacao = locacoes.Find(l => l.Id == locacaoId);
@@ -658,7 +887,7 @@ namespace SistemaGerenciamentoAcademia
             }
             else
             {
-                Console.WriteLine("\nID da locação inválido. Por favor, insira um número.");
+                Console.WriteLine("\nID da locação inválido. Por favor, insira um número positivo.");
             }
         }
 
